@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "docker": "docker build -t catgram .",
+    "docker-run": "docker run -p 3000:3000 catgram"
   },
   "keywords": [],
   "author": "",

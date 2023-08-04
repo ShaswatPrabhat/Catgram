@@ -5,7 +5,7 @@ const options = {
   swaggerDefinition: {
     openapi: "3.0.0",
     info: {
-      title: "Cat Pictures API",
+      title: "CatGram",
       version: "1.0.0",
       description: "API to manage cat pictures",
     },
