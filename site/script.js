@@ -1,4 +1,3 @@
-// Fetch all cat pictures from the API and display them on the UI
 async function fetchCatPictures() {
   try {
     const response = await fetch("/api/cats/fetch/");
@@ -21,7 +20,6 @@ async function fetchCatPictures() {
   }
 }
 
-// Upload a cat picture using the API
 async function uploadCatPicture(event) {
   event.preventDefault();
   const formData = new FormData(event.target);
@@ -43,10 +41,8 @@ async function uploadCatPicture(event) {
   }
 }
 
-// Attach event listener to the form for uploading cat pictures
 document
   .getElementById("uploadForm")
   .addEventListener("submit", uploadCatPicture);
 
-// Fetch and display all cat pictures on page load
 fetchCatPictures();

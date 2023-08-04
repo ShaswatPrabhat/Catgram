@@ -3,6 +3,7 @@ const router = require("./src/router/router");
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 const morgan = require("morgan");
+const basicAuth = require("express-basic-auth");
 const { DB_PATH, PORT } = require("./constants");
 const { specs, swaggerUi } = require("./config/swagger");
 
@@ -20,19 +21,22 @@ db.run(createTableQuery);
 
 const app = express();
 
-// Serve static files from the 'site' folder
 app.use(express.static(path.join(__dirname, "site")));
-
-// Handle requests for the root path ('/')
+app.use(morgan("dev"));
+app.use(
+  basicAuth({
+    users: { cat: "meow" },
+    challenge: true,
+  }),
+);
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "site", "index.html"));
 });
 
 app.use("/api/cats", router);
-app.use(morgan("dev"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 const server = app.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);
 });
 
-module.exports = server; // Export the app instance
+module.exports = server;

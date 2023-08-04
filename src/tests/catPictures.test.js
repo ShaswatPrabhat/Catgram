@@ -1,9 +1,6 @@
-// tests/catPictures.test.js
-
 const request = require("supertest");
 const app = require("../../app");
 
-// Test case for cat picture upload
 describe("POST /api/cats/upload", () => {
   it("should upload a cat picture", async () => {
     const response = await request(app)
@@ -19,7 +16,6 @@ describe("POST /api/cats/upload", () => {
   });
 });
 
-// Test case for fetching all cat pictures
 describe("GET /api/cats/fetch", () => {
   it("should fetch all cat pictures", async () => {
     const response = await request(app).get("/api/cats/fetch");
@@ -30,17 +26,14 @@ describe("GET /api/cats/fetch", () => {
   });
 });
 
-// Test case for fetching a particular cat picture by its ID
 describe("GET /api/cats/fetch/:id", () => {
   it("should fetch a particular cat picture", async () => {
-    // First, upload a cat picture to get its ID
     const uploadResponse = await request(app)
       .post("/api/cats/upload")
       .attach("catImage", "./tests/test-cat.jpg");
 
     const catId = uploadResponse.body.id;
 
-    // Fetch the cat picture using the obtained ID
     const response = await request(app).get(`/api/cats/fetch/${catId}`);
 
     expect(response.status).toBe(200);
@@ -54,17 +47,14 @@ describe("GET /api/cats/fetch/:id", () => {
   });
 });
 
-// Test case for deleting a cat picture
 describe("DELETE /api/cats/delete/:id", () => {
   it("should delete a cat picture", async () => {
-    // First, upload a cat picture to get its ID
     const uploadResponse = await request(app)
       .post("/api/cats/upload")
       .attach("catImage", "./tests/test-cat.jpg");
 
     const catId = uploadResponse.body.id;
 
-    // Delete the cat picture using the obtained ID
     const deleteResponse = await request(app).delete(
       `/api/cats/delete/${catId}`,
     );

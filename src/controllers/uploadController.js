@@ -9,7 +9,7 @@ const db = new sqlite3.Database(DB_PATH);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, UPLOADS_PATH); // Destination folder where cat pictures will be stored
+    cb(null, UPLOADS_PATH);
   },
   filename: function (req, file, cb) {
     const uniqueFileName = uuidv4() + "-" + file.originalname;

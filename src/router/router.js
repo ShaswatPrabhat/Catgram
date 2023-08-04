@@ -1,5 +1,3 @@
-// router/cats.js
-
 const express = require("express");
 const uploadController = require("../controllers/uploadController");
 const deleteController = require("../controllers/deleteController");
