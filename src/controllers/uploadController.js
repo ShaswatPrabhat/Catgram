@@ -19,6 +19,41 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+/**
+ * @swagger
+ * /api/cats/upload/:
+ *   post:
+ *     summary: Upload a cat picture.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               catImage:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       201:
+ *         description: Cat picture uploaded successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The ID of the uploaded cat picture.
+ *                 message:
+ *                   type: string
+ *                   description: Success message.
+ *       400:
+ *         description: Bad request - No cat picture uploaded.
+ *       500:
+ *         description: Internal server error - Failed to save cat picture information.
+ */
+
 router.post("/", upload.single("catImage"), (req, res) => {
   const catId = uuidv4();
   const originalname = req.file.originalname;

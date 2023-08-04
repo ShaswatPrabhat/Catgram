@@ -19,6 +19,49 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+/**
+ * @swagger
+ * /api/cats/update/{id}:
+ *   put:
+ *     summary: Update a previously uploaded cat picture (not just metadata) in place.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the cat picture to update.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               catImage:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Cat picture updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The ID of the updated cat picture.
+ *                 message:
+ *                   type: string
+ *                   description: Success message.
+ *       400:
+ *         description: Bad request - No cat picture uploaded for update.
+ *       404:
+ *         description: Cat picture not found for update.
+ *       500:
+ *         description: Internal server error - Failed to update cat picture.
+ */
 router.put("/:id", upload.single("catImage"), (req, res) => {
   const catId = req.params.id;
   const originalname = req.file.originalname;

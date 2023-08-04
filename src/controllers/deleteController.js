@@ -6,7 +6,34 @@ const router = express.Router();
 
 const db = new sqlite3.Database(DB_PATH);
 
-// Handle cat picture deletion
+/**
+ * @swagger
+ * /api/cats/delete/{id}:
+ *   delete:
+ *     summary: Delete a cat picture by its ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the cat picture to delete.
+ *     responses:
+ *       200:
+ *         description: Cat picture deleted successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message.
+ *       404:
+ *         description: Cat picture not found for deletion.
+ *       500:
+ *         description: Internal server error - Failed to delete cat picture.
+ */
 router.delete("/:id", (req, res) => {
   const catId = req.params.id;
 
