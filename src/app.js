@@ -18,6 +18,8 @@ const PORT = 3000;
 
 app.use("/api/cats", router);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);
 });
+
+module.exports = server; // Export the app instance
