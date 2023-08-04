@@ -2,7 +2,8 @@ const express = require("express");
 const router = require("./src/router/router");
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
-const db = new sqlite3.Database(path.join(__dirname, "cat_pictures.db"));
+const { DB_PATH } = require("./constants");
+const db = new sqlite3.Database(DB_PATH);
 
 const createTableQuery = `
   CREATE TABLE IF NOT EXISTS cat_pictures (

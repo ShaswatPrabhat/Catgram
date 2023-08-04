@@ -1,9 +1,10 @@
 const express = require("express");
-const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
+const { DB_PATH, UPLOADS_PATH } = require("../../constants");
 
 const router = express.Router();
-const db = new sqlite3.Database(path.join(__dirname, "../../cat_pictures.db"));
+
+const db = new sqlite3.Database(DB_PATH);
 
 router.get("/:id", (req, res) => {
   const catId = req.params.id;
@@ -14,7 +15,7 @@ router.get("/:id", (req, res) => {
       return res.status(404).json({ error: "Cat picture not found" });
     }
 
-    const filePath = `${path.join(__dirname, "../../uploads")}/${row.filename}`;
+    const filePath = `${UPLOADS_PATH}/${row.filename}`;
 
     res.sendFile(filePath);
   });
@@ -32,7 +33,7 @@ router.get("/", (req, res) => {
       id: row.id,
       originalname: row.originalname,
       filename: row.filename,
-      filePath: `${path.join(__dirname, "../../uploads")}/${row.filename}`,
+      filePath: `${UPLOADS_PATH}/${row.filename}`,
     }));
 
     res.json({ catPictures });
