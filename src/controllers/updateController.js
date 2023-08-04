@@ -2,13 +2,14 @@ const express = require("express");
 const multer = require("multer");
 const sqlite3 = require("sqlite3");
 const { v4: uuidv4 } = require("uuid");
+const path = require("path");
 
 const router = express.Router();
-const db = new sqlite3.Database("../cat_pictures.db");
+const db = new sqlite3.Database(path.join(__dirname, "../../cat_pictures.db"));
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./uploads");
+    cb(null, path.join(__dirname, "../../uploads"));
   },
   filename: function (req, file, cb) {
     const uniqueFileName = uuidv4() + "-" + file.originalname;
@@ -29,7 +30,7 @@ router.put("/:id", upload.single("catImage"), (req, res) => {
       return res.status(404).json({ error: "Cat picture not found" });
     }
 
-    const oldFilePath = `./uploads/${row.filename}`;
+    const oldFilePath = `${path.join(__dirname, "../../uploads")}/${row.filename}`;
     fs.unlinkSync(oldFilePath);
 
     const updateQuery = `UPDATE cat_pictures SET originalname = ?, filename = ? WHERE id = ?`;

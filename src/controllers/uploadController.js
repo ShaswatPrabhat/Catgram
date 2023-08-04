@@ -2,13 +2,14 @@ const express = require("express");
 const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
 const sqlite3 = require("sqlite3");
+const path = require("path");
 
 const router = express.Router();
-const db = new sqlite3.Database("../cat_pictures.db");
+const db = new sqlite3.Database(path.join(__dirname, "../../cat_pictures.db"));
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./uploads"); // Destination folder where cat pictures will be stored
+    cb(null, path.join(__dirname, "../../uploads")); // Destination folder where cat pictures will be stored
   },
   filename: function (req, file, cb) {
     const uniqueFileName = uuidv4() + "-" + file.originalname;

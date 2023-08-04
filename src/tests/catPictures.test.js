@@ -1,7 +1,7 @@
 // tests/catPictures.test.js
 
 const request = require("supertest");
-const app = require("../app");
+const app = require("../../app");
 
 // Test case for cat picture upload
 describe("POST /api/cats", () => {
