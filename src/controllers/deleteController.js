@@ -1,6 +1,7 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const { DB_PATH, UPLOADS_PATH } = require("../../constants");
+const { unlinkSync } = require("fs");
 
 const router = express.Router();
 
@@ -44,7 +45,7 @@ router.delete("/:id", (req, res) => {
     }
 
     const filePath = `${UPLOADS_PATH}/${row.filename}`;
-    fs.unlinkSync(filePath);
+    unlinkSync(filePath);
 
     const deleteQuery = `DELETE FROM cat_pictures WHERE id = ?`;
     db.run(deleteQuery, [catId], (err) => {

@@ -9,8 +9,8 @@
     "docker": "docker build -t catgram .",
     "docker-run": "docker run -p 3000:3000 catgram"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Cats", "Express", "Meow"],
+  "author": "Shaswat Prabhat",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
