@@ -4,11 +4,11 @@ const request = require("supertest");
 const app = require("../../app");
 
 // Test case for cat picture upload
-describe("POST /api/cats", () => {
+describe("POST /api/cats/upload", () => {
   it("should upload a cat picture", async () => {
     const response = await request(app)
-      .post("/api/cats")
-      .attach("catImage", "./tests/test-cat.jpg");
+      .post("/api/cats/upload")
+      .attach("catImage", "test-cat.jpg");
 
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("id");
@@ -20,9 +20,9 @@ describe("POST /api/cats", () => {
 });
 
 // Test case for fetching all cat pictures
-describe("GET /api/cats", () => {
+describe("GET /api/cats/fetch", () => {
   it("should fetch all cat pictures", async () => {
-    const response = await request(app).get("/api/cats");
+    const response = await request(app).get("/api/cats/fetch");
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("catPictures");
@@ -31,17 +31,17 @@ describe("GET /api/cats", () => {
 });
 
 // Test case for fetching a particular cat picture by its ID
-describe("GET /api/cats/:id", () => {
+describe("GET /api/cats/fetch/:id", () => {
   it("should fetch a particular cat picture", async () => {
     // First, upload a cat picture to get its ID
     const uploadResponse = await request(app)
-      .post("/api/cats")
+      .post("/api/cats/upload")
       .attach("catImage", "./tests/test-cat.jpg");
 
     const catId = uploadResponse.body.id;
 
     // Fetch the cat picture using the obtained ID
-    const response = await request(app).get(`/api/cats/${catId}`);
+    const response = await request(app).get(`/api/cats/fetch/${catId}`);
 
     expect(response.status).toBe(200);
     expect(response.headers["content-type"]).toContain("image/jpeg");
@@ -55,17 +55,19 @@ describe("GET /api/cats/:id", () => {
 });
 
 // Test case for deleting a cat picture
-describe("DELETE /api/cats/:id", () => {
+describe("DELETE /api/cats/delete/:id", () => {
   it("should delete a cat picture", async () => {
     // First, upload a cat picture to get its ID
     const uploadResponse = await request(app)
-      .post("/api/cats")
+      .post("/api/cats/upload")
       .attach("catImage", "./tests/test-cat.jpg");
 
     const catId = uploadResponse.body.id;
 
     // Delete the cat picture using the obtained ID
-    const deleteResponse = await request(app).delete(`/api/cats/${catId}`);
+    const deleteResponse = await request(app).delete(
+      `/api/cats/delete/${catId}`,
+    );
 
     expect(deleteResponse.status).toBe(200);
     expect(deleteResponse.body).toHaveProperty(
@@ -75,7 +77,9 @@ describe("DELETE /api/cats/:id", () => {
   });
 
   it("should return 404 if cat picture not found", async () => {
-    const response = await request(app).delete("/api/cats/nonexistentid");
+    const response = await request(app).delete(
+      "/api/cats/delete/nonexistentid",
+    );
 
     expect(response.status).toBe(404);
   });
