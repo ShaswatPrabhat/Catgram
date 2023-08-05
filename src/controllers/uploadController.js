@@ -1,7 +1,7 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 const { db, insertQuery } = require("../repository/catRepository");
-const { uploadSingleCatImage } = require("../fsBlob/upload");
+const { uploadSingleCatImage } = require("../fsBlob/blob");
 
 const router = express.Router();
 

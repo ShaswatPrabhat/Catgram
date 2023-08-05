@@ -1,7 +1,7 @@
 const express = require("express");
 const { UPLOADS_PATH } = require("../../constants");
 const { db, selectQuery, updateQuery } = require("../repository/catRepository");
-const { uploadSingleCatImage, deleteFile } = require("../fsBlob/upload");
+const { uploadSingleCatImage, deleteFile } = require("../fsBlob/blob");
 
 const router = express.Router();
 
