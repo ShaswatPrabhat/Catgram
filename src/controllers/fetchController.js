@@ -1,6 +1,6 @@
 const express = require("express");
 const { UPLOADS_PATH } = require("../../constants");
-const { db, selectQuery, selectAllQuery} = require("../utils/db");
+const { db, selectQuery, selectAllQuery} = require("../repository/catRepository");
 
 const router = express.Router();
 

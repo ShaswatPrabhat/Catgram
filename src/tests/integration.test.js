@@ -1,6 +1,5 @@
 const request = require("supertest");
 const app = require("../../app");
-const path = require("path");
 
 describe("POST /api/cats/upload", () => {
   it("should upload a cat picture", async () => {

@@ -1,6 +1,6 @@
 const express = require("express");
 const { UPLOADS_PATH } = require("../../constants");
-const { db, selectQuery, updateQuery } = require("../utils/db");
+const { db, selectQuery, updateQuery } = require("../repository/catRepository");
 const { unlinkSync } = require("fs");
 const { uploadSingleCatImage } = require("../utils/upload");
 

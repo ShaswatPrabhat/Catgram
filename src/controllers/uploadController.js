@@ -1,6 +1,6 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
-const { db, insertQuery } = require("../utils/db");
+const { db, insertQuery } = require("../repository/catRepository");
 const { uploadSingleCatImage } = require("../utils/upload");
 
 const router = express.Router();

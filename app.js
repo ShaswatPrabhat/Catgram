@@ -6,12 +6,9 @@ const morgan = require("morgan");
 const basicAuth = require("express-basic-auth");
 const { DB_PATH, PORT } = require("./constants");
 const { specs, swaggerUi } = require("./config/swagger");
-const { createTableQuery } = require("./src/utils/db");
-
-const db = new sqlite3.Database(DB_PATH);
+const { db, createTableQuery } = require("./src/repository/catRepository");
 
 db.run(createTableQuery);
-
 const app = express();
 
 app.use(express.static(path.join(__dirname, "site")));

@@ -1,7 +1,7 @@
 const express = require("express");
 const { UPLOADS_PATH } = require("../../constants");
 const { unlinkSync } = require("fs");
-const { db, selectQuery, deleteQuery} = require("../utils/db");
+const { db, selectQuery, deleteQuery} = require("../repository/catRepository");
 
 const router = express.Router();
 

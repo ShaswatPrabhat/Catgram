@@ -1,6 +1,6 @@
 const sqlite3 = require("sqlite3");
 const { DB_PATH } = require("../../constants");
-const db = new sqlite3.Database(DB_PATH);
+const catRepository = new sqlite3.Database(DB_PATH);
 
 const insertQuery = `
     INSERT INTO cat_pictures (id, originalname, filename)
@@ -24,7 +24,7 @@ const createTableQuery = `
 `;
 
 module.exports = {
-  db,
+  db: catRepository,
   insertQuery,
   selectQuery,
   deleteQuery,
