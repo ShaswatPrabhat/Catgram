@@ -4,7 +4,6 @@ const path = require("path");
 
 describe("POST /api/cats/upload", () => {
   it("should upload a cat picture", async () => {
-    console.log(path.join(__dirname, ""));
     const response = await request(app)
       .post("/api/cats/upload")
       .auth("cat", "meow")

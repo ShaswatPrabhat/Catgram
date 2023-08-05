@@ -1,11 +1,9 @@
 const express = require("express");
-const sqlite3 = require("sqlite3").verbose();
-const { DB_PATH, UPLOADS_PATH } = require("../../constants");
+const { UPLOADS_PATH } = require("../../constants");
 const { unlinkSync } = require("fs");
+const { db, selectQuery, deleteQuery} = require("../utils/db");
 
 const router = express.Router();
-
-const db = new sqlite3.Database(DB_PATH);
 
 /**
  * @swagger
@@ -38,7 +36,6 @@ const db = new sqlite3.Database(DB_PATH);
 router.delete("/:id", (req, res) => {
   const catId = req.params.id;
 
-  const selectQuery = `SELECT filename FROM cat_pictures WHERE id = ?`;
   db.get(selectQuery, [catId], (err, row) => {
     if (err || !row) {
       return res.status(404).json({ error: "Cat picture not found" });
@@ -47,7 +44,6 @@ router.delete("/:id", (req, res) => {
     const filePath = `${UPLOADS_PATH}/${row.filename}`;
     unlinkSync(filePath);
 
-    const deleteQuery = `DELETE FROM cat_pictures WHERE id = ?`;
     db.run(deleteQuery, [catId], (err) => {
       if (err) {
         return res.status(500).json({ error: "Failed to delete cat picture" });

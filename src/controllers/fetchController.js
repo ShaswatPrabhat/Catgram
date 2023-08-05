@@ -1,10 +1,8 @@
 const express = require("express");
-const sqlite3 = require("sqlite3").verbose();
-const { DB_PATH, UPLOADS_PATH } = require("../../constants");
+const { UPLOADS_PATH } = require("../../constants");
+const { db, selectQuery, selectAllQuery} = require("../utils/db");
 
 const router = express.Router();
-
-const db = new sqlite3.Database(DB_PATH);
 
 /**
  * @swagger
@@ -34,7 +32,6 @@ const db = new sqlite3.Database(DB_PATH);
 router.get("/:id", (req, res) => {
   const catId = req.params.id;
 
-  const selectQuery = `SELECT filename FROM cat_pictures WHERE id = ?`;
   db.get(selectQuery, [catId], (err, row) => {
     if (err || !row) {
       return res.status(404).json({ error: "Cat picture not found" });
@@ -60,7 +57,6 @@ router.get("/:id", (req, res) => {
  *         description: Internal server error - Failed to fetch cat picture.
  */
 router.get("/", (req, res) => {
-  const selectAllQuery = `SELECT * FROM cat_pictures`;
   db.all(selectAllQuery, [], (err, rows) => {
     if (err) {
       console.error(err);

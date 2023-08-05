@@ -1,23 +1,9 @@
 const express = require("express");
-const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
-const sqlite3 = require("sqlite3");
-const { DB_PATH, UPLOADS_PATH } = require("../../constants");
+const { db, insertQuery } = require("../utils/db");
+const { uploadSingleCatImage } = require("../utils/upload");
 
 const router = express.Router();
-const db = new sqlite3.Database(DB_PATH);
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, UPLOADS_PATH);
-  },
-  filename: function (req, file, cb) {
-    const uniqueFileName = uuidv4() + "-" + file.originalname;
-    cb(null, uniqueFileName);
-  },
-});
-
-const upload = multer({ storage: storage });
 
 /**
  * @swagger
@@ -54,15 +40,11 @@ const upload = multer({ storage: storage });
  *         description: Internal server error - Failed to save cat picture information.
  */
 
-router.post("/", upload.single("catImage"), (req, res) => {
+router.post("/", uploadSingleCatImage, (req, res) => {
   const catId = uuidv4();
   const originalname = req.file.originalname;
   const filename = req.file.filename;
 
-  const insertQuery = `
-    INSERT INTO cat_pictures (id, originalname, filename)
-    VALUES (?, ?, ?)
-  `;
   db.run(insertQuery, [catId, originalname, filename], (err) => {
     if (err) {
       return res.status(500).json({ error: "Failed to upload cat picture" });
