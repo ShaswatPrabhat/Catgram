@@ -1,6 +1,7 @@
 const multer = require("multer");
 const { UPLOADS_PATH } = require("../../constants");
 const { v4: uuidv4 } = require("uuid");
+const { unlinkSync } = require("fs");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -12,8 +13,8 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const uploadSingleCatImage = multer({ storage: storage }).single("catImage");
 
-const uploadSingleCatImage = upload.single("catImage");
+const deleteFile = (path) => unlinkSync(path);
 
-module.exports = { upload, uploadSingleCatImage };
+module.exports = { deleteFile, uploadSingleCatImage };

@@ -1,8 +1,7 @@
 const express = require("express");
 const { UPLOADS_PATH } = require("../../constants");
 const { db, selectQuery, updateQuery } = require("../repository/catRepository");
-const { unlinkSync } = require("fs");
-const { uploadSingleCatImage } = require("../utils/upload");
+const { uploadSingleCatImage, deleteFile } = require("../fsBlob/upload");
 
 const router = express.Router();
 
@@ -60,7 +59,7 @@ router.put("/:id", uploadSingleCatImage, (req, res) => {
     }
 
     const oldFilePath = `${UPLOADS_PATH}/${row.filename}`;
-    unlinkSync(oldFilePath);
+    deleteFile(oldFilePath);
 
     db.run(updateQuery, [originalname, filename, catId], (err) => {
       if (err) {

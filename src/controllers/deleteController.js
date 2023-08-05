@@ -1,7 +1,7 @@
 const express = require("express");
 const { UPLOADS_PATH } = require("../../constants");
-const { unlinkSync } = require("fs");
-const { db, selectQuery, deleteQuery} = require("../repository/catRepository");
+const { db, selectQuery, deleteQuery } = require("../repository/catRepository");
+const { deleteFile } = require("../fsBlob/upload");
 
 const router = express.Router();
 
@@ -42,7 +42,7 @@ router.delete("/:id", (req, res) => {
     }
 
     const filePath = `${UPLOADS_PATH}/${row.filename}`;
-    unlinkSync(filePath);
+    deleteFile(filePath);
 
     db.run(deleteQuery, [catId], (err) => {
       if (err) {
